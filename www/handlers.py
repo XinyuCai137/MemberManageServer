@@ -7,8 +7,8 @@ from model import Member, next_id
 
 @get('/')
 async def index(request):
-    members = await Menmber.findAll()
+    #members = await Member.findAll()
     return {
         '__template__': 'test.html',
-        'members': members
+        #'members': members
     }
