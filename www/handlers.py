@@ -1,7 +1,13 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""
+Created on Wed Oct 3 2018
+@author: Vegelofe
+Learned from Michael Liao
+"""
 
-__author__ = 'Michael Liao'
+'''
+async web application.
+'''
 
 ' url handlers '
 
