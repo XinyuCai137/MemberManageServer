@@ -1,0 +1,123 @@
+{% extends '__base__.html' %}
+
+{% block title %}面试报名{% endblock %}
+
+{% block beforehead %}
+
+<script>
+function validateEmail(email) {
+    var re = /^[a-z0-9\.\-\_]+\@[a-z0-9\-\_]+(\.[a-z0-9\-\_]+){1,4}$/;
+    return re.test(email.toLowerCase());
+}
+$(function () {
+    var vm = new Vue({
+        el: '#vm',
+        data: {
+            name: '',
+            email: '',
+            s_id: '',
+            sex: '',
+            school: '',
+        },
+        methods: {
+            submit: function (event) {
+                event.preventDefault();
+                var $form = $('#vm');
+                if (! this.name.trim()) {
+                    return $form.showFormError('请输入名字');
+                }
+                if (! this.name.trim()) {
+                    return $form.showFormError('请输入学号');
+                }
+                if (! validateEmail(this.email.trim().toLowerCase())) {
+                    return $form.showFormError('请输入正确的Email地址');
+                }
+                var email = this.email.trim().toLowerCase();
+                $form.postJSON('/api/signup', {
+                    name: this.name.trim(),
+                    email: email,
+                    s_id: this.s_id.trim(),
+                    sex: this.sex,
+                    school: this.school
+                }, function (err, r) {
+                    if (err) {
+                        return $form.showFormError(err);
+                    }
+                    return location.assign('/');
+                });
+            }
+        }
+    });
+    $('#vm').show();
+});
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="uk-width-2-3">
+        <h1>欢迎报名学生合唱团！</h1>
+        <form id="vm" v-on="submit: submit" class="uk-form uk-form-stacked">
+            <div class="uk-alert uk-alert-danger uk-hidden"></div>
+            <div class="uk-form-row">
+                <label class="uk-form-label">姓名:</label>
+                <div class="uk-form-controls">
+                    <input v-model="name" type="text" maxlength="50" placeholder="名字" class="uk-width-1-1">
+                </div>
+            </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label">学号:</label>
+                <div class="uk-form-controls">
+                    <input v-model="id" type="text" maxlength="10" class="uk-width-1-1">
+                </div>
+            </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label">性别:</label>
+                <div class="uk-form-controls">
+                    <input v-model="sex" type="radio" value="男" checked class="uk-width-1-1">男
+                    <br>
+                    <input v-model="sex" type="radio" value="女"  class="uk-width-1-1">女
+                </div>
+            </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label">电子邮件:</label>
+                <div class="uk-form-controls">
+                    <input v-model="email" type="text" maxlength="50" placeholder="your-name@mail.ustc.edu.cn" class="uk-width-1-1">
+                </div>
+            </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label">学院:</label>
+                <div class="uk-form-controls">
+                    <input v-model="school" type="radio" value="少年班学院" checked class="uk-width-1-1">少年班学院
+                    <br>
+                    <input v-model="school" type="radio" value="数学科学学院" class="uk-width-1-1">数学科学学院
+                    <br>
+                    <input v-model="school" type="radio" value="物理学院" class="uk-width-1-1">物理学院
+                    <br>
+                    <input v-model="school" type="radio" value="管理学院" class="uk-width-1-1">管理学院
+                    <br>
+                    <input v-model="school" type="radio" value="化学与材料科学学院" class="uk-width-1-1">化学与材料科学学院
+                    <br>
+                    <input v-model="school" type="radio" value="地球和空间科学学院" class="uk-width-1-1">地球和空间科学学院
+                    <br>
+                    <input v-model="school" type="radio" value="人文与社会科学学院" class="uk-width-1-1">人文与社会科学学院
+                    <br>
+                    <input v-model="school" type="radio" value="工程科学学院" class="uk-width-1-1">工程科学学院
+                    <br>
+                    <input v-model="school" type="radio" value="信息科学技术学院" class="uk-width-1-1">信息科学技术学院
+                    <br>
+                    <input v-model="school" type="radio" value="计算机科学与技术学院" class="uk-width-1-1">计算机科学与技术学院
+                    <br>
+                    <input v-model="school" type="radio" value="网络空间安全学院" class="uk-width-1-1">网络空间安全学院
+                    <br>
+                    <input v-model="school" type="radio" value="软件学院" class="uk-width-1-1">软件学院
+                </div>
+            </div>
+            <div class="uk-form-row">
+                <button type="submit" class="uk-button uk-button-primary"><i class="uk-icon-user"></i> 注册</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
