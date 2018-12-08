@@ -1,0 +1,81 @@
+{% extends '__base__.html' %}
+
+{% block title %}面试审核{% endblock %}
+
+{% block beforehead %}
+
+<script src="/static/js/vue.js"></script>
+<script src="/static/js/vue-resource.min.js"></script>
+
+{% endblock %}
+
+{% block content %}
+<div  id='app' class="uk-width-2-3">
+        <h1>面试审核</h1>  
+        <table class="uk-table">
+            <thead>
+                <tr>
+                    <th>学号</th>
+                    <th>性别</th>
+                    <th>音高感1</th>
+                    <th>音高感2</th>
+                    <th>节奏感1</th>
+                    <th>节奏感2</th>
+                    <th>自由展示</th>
+                    <th>状态</th>
+                    <th>是</th>
+                    <th>否</th>
+                </tr>
+            </thead>           
+            <tfoot>
+                <tr v-for="item in interviews">
+                    <td>[[ item.stu_id ]]</td>
+                    <td>[[ item.sex ]]</td>
+                    <td>[[ item.grade_1 ]]</td>
+                    <td>[[ item.grade_2 ]]</td>
+                    <td>[[ item.grade_3 ]]</td>
+                    <td>[[ item.grade_4 ]]</td>
+                    <td>[[ item.grade_5 ]]</td>
+                    <td>[[ item.passed ]]</td>
+                    <td><input v-model="item.passed" type="radio" value=true class="uk-width-1-1"></td>
+                    <td><input v-model="item.passed" type="radio" value=false class="uk-width-1-1"></td>
+                </tr>
+            </tfoot>
+        </table>
+        <button v-on:click="submit" class="uk-button uk-button-primary">提交</button>
+</div>
+<script>
+
+var app = new Vue({
+    el: '#app',
+    delimiters:['[[', ']]'],
+    data: {
+        interviews: [],
+    },
+    methods: {
+        submit: function(event){
+            this.$http.post('/manage/api/submit_interview_result', {'interviews': this.interviews}).then(
+                function(res){
+                    this.interviews = res.body;
+                    alert("更新成功！");
+                },
+                function(){
+                    console.log('请求失败处理');
+                }
+            )
+        } 
+
+    },
+    mounted: function () {
+        this.$http.get('/manage/api/get_interviews').then(
+            function(res){
+                this.interviews = res.body;    
+            },
+            function(){
+                console.log('请求失败处理');
+            }
+        );
+    },
+})
+</script>
+{% endblock %}

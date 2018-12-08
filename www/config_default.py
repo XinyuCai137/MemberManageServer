@@ -10,13 +10,13 @@ Learned from Michael Liao
 configs = {
     'debug': True,
     'db': {
-        'host': '127.0.0.1',
+        'host': 'localhost',
         'port': 3306,
-        'user': 'www',
-        'password': 'www',
-        'db': 'awesome'
+        'user': 'root',
+        'password': 'AUI1997',
+        'db': 'chorus'
     },
     'session': {
-        'secret': 'Awesome'
+        'secret': 'chorus'
     }
 }

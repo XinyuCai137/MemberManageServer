@@ -1,0 +1,115 @@
+{% extends '__base__.html' %}
+
+{% block title %}面试{% endblock %}
+
+{% block beforehead %}
+<script src="/static/js/vue.min.js"></script>
+
+<script>
+
+$(function () {
+    var vm = new Vue({
+        el: '#vm',
+        data: {
+            stu_id: '',
+            grade_1: null,
+            grade_2: null,
+            grade_3: null,
+            grade_4: null,
+            grade_5: null,
+            extra: ''
+        },
+        methods: {
+            submit: function (event) {
+                event.preventDefault();
+                var $form = $('#vm');
+                if (! this.stu_id.trim()) {
+                    return $form.showFormError('请输入学号');
+                }
+                $form.postJSON('/manage/api/interview_grade', {
+                    stu_id: this.stu_id.trim(),
+                    grade_1: this.grade_1,
+                    grade_2: this.grade_2,
+                    grade_3: this.grade_3,
+                    grade_4: this.grade_4,
+                    grade_5: this.grade_5,
+                    extra: this.extra
+                }, function (err, r) {
+                    if (err) {
+                        return $form.showFormError(err);
+                    }
+                    this.stu_id = r.stu_id;
+                    this.grade_1 = r.grade_1;
+                    this.grade_2 = r.grade_2;
+                    this.grade_3 = r.grade_3;
+                    this.grade_4 = r.grade_4;
+                    this.grade_5 = r.grade_5;
+                    this.extra = r.extra;
+                    alert("更新成功！");
+                    location.reload();
+                });
+            }
+        }
+    });
+    $('#vm').show();
+   
+});
+
+</script>
+
+{% endblock %}
+
+{% block content %}
+<div class="uk-width-2-3">
+        <h1>面试成绩</h1>  
+        <form id="vm" v-on="submit: submit" class="uk-form uk-form-stacked">
+            <div class="uk-alert uk-alert-danger uk-hidden"></div>
+            <div class="uk-form-row">
+                <label class="uk-form-label">学号:</label>
+                <div class="uk-form-controls">
+                    <input v-model="stu_id" type="text" maxlength="10" placeholder="学号" class="uk-width-1-1">
+                </div>
+            </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label">音高感1:</label>
+                <div class="uk-form-controls">
+                    <input v-model="grade_1" type="number" class="uk-width-1-1">
+                </div>
+            </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label">音高感2:</label>             
+                <div class="uk-form-controls">
+                    <input v-model="grade_2" type="number" class="uk-width-1-1">
+                </div>
+            </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label">节奏感1:</label>
+                <div class="uk-form-controls">
+                    <input v-model="grade_3" type="number" class="uk-width-1-1">
+                </div>
+            </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label">节奏感2:</label>
+                <div class="uk-form-controls">
+                    <input v-model="grade_4" type="number" class="uk-width-1-1">
+                </div>
+            </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label">自由展示:</label>
+                <div class="uk-form-controls">
+                    <input v-model="grade_5" type="number" class="uk-width-1-1">
+                </div>
+            </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label">综合调查:</label>
+                <div class="uk-form-controls">
+                    <input v-model="extra" type="text" maxlength="500" placeholder="综合调查" class="uk-width-1-1">
+                </div>
+            </div>            
+            <div class="uk-form-row">
+                <button type="submit" class="uk-button uk-button-primary"><i class="uk-icon-user"></i>更新</button>
+            </div>
+        </form>
+
+</div>
+{% endblock %}

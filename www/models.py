@@ -9,33 +9,37 @@ __author__ = 'Michael Liao'
 
 import time, uuid
 
-from orm import Model, StringField, BooleanField, FloatField, TextField
+from orm import Model, StringField, BooleanField, FloatField, TextField, IntegerField
 
 def next_id():
     return '%015d%s000' % (int(time.time() * 1000), uuid.uuid4().hex)
 
-
-
-
-class Interviewer(Model):
+class Interviewers(Model):
     __table__ = 'interviewers'
 
     stu_id = StringField(primary_key=True, ddl='varchar(10)')
     email = StringField(ddl='varchar(50)')
     name = StringField(ddl='varchar(10)')
     sex = StringField(ddl='varchar(10)')
-    admin = BooleanField()
+    school = StringField(ddl='varchar(30)')
+    phone = StringField(ddl='varchar(20)')
+    passed = BooleanField()
     image = StringField(ddl='varchar(500)')
     created_at = FloatField(default=time.time)
 
-class Interview(Model):
+class Interviews(Model):
     __table__ = 'interviews'
-
+    
     stu_id = StringField(primary_key=True, ddl='varchar(10)')
+    grade_1 = IntegerField()
+    grade_2 = IntegerField()
+    grade_3 = IntegerField()
+    grade_4 = IntegerField()
+    grade_5 = IntegerField()
+    extra = StringField(ddl='varchar(500)')
 
 
-
-class Member(Model):
+class Members(Model):
     __table__ = 'members'
 
     stu_id = StringField(primary_key=True, ddl='varchar(50)')
@@ -47,50 +51,43 @@ class Member(Model):
     school = StringField(ddl='varchar(30)')
     voice_part = StringField(ddl='varchar(2)')
     department = StringField(ddl='varchar(10)')
+    phone = StringField(ddl='varchar(20)')
     image = StringField(ddl='varchar(500)')
     created_at = FloatField(default=time.time)
 
-class Voice(Model):
+class Schools(Model):
+    __table__ = 'schools'
+
+    school = StringField(primary_key=True, ddl='varchar(30)')
+    campus = StringField(ddl='varchar(10)')
+
+class Voice_parts(Model):
     __table__ = 'voice_parts'
 
     voice_part = StringField(primary_key=True, ddl='varchar(2)')
     vp_lead1 = StringField(ddl='varchar(10)')
     vp_lead2 = StringField(ddl='varchar(10)')
 
-
-
-class School(Model):
-    __table__ = 'schools'
-
-    school = StringField(primary_key=True, ddl='varchar(30)')
-    campus = StringField(ddl='varchar(10)')
-
-
-class Department(Model):
+class Departments(Model):
     __table__ = 'departments'
 
     department = StringField(primary_key=True, ddl='varchar(10)')
     dep_lead = StringField(ddl='varchar(10)')
 
-# class Blog(Model):
-#     __table__ = 'blogs'
+class Clothes(Model):
+    __table__ = 'clothes'
 
-#     id = StringField(primary_key=True, default=next_id, ddl='varchar(50)')
-#     user_id = StringField(ddl='varchar(50)')
-#     user_name = StringField(ddl='varchar(50)')
-#     user_image = StringField(ddl='varchar(500)')
-#     name = StringField(ddl='varchar(50)')
-#     summary = StringField(ddl='varchar(200)')
-#     content = TextField()
-#     created_at = FloatField(default=time.time)
+    cloth_id = StringField(primary_key=True, ddl='varchar(10)')
+    cloth_sex = StringField(ddl='varchar(2)')
+    cloth_size = StringField(ddl='varchar(5)')
+    borrowed = BooleanField()
 
-# class Comment(Model):
-#     __table__ = 'comments'
+class Clothes_use(Model):
+    __table__ = 'clothes_use'
 
-#     id = StringField(primary_key=True, default=next_id, ddl='varchar(50)')
-#     blog_id = StringField(ddl='varchar(50)')
-#     user_id = StringField(ddl='varchar(50)')
-#     user_name = StringField(ddl='varchar(50)')
-#     user_image = StringField(ddl='varchar(500)')
-#     content = TextField()
-#     created_at = FloatField(default=time.time)
+    stu_id = StringField(ddl='varchar(10)')
+    cloth_id = StringField(primary_key=True, ddl='varchar(10)')
+    borrow_time = FloatField(default=time.time)
+    returen_time = FloatField()
+
+

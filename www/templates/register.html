@@ -3,7 +3,7 @@
 {% block title %}注册{% endblock %}
 
 {% block beforehead %}
-
+<script src="/static/js/vue.min.js"></script>
 <script>
 function validateEmail(email) {
     var re = /^[a-z0-9\.\-\_]+\@[a-z0-9\-\_]+(\.[a-z0-9\-\_]+){1,4}$/;
@@ -13,18 +13,14 @@ $(function () {
     var vm = new Vue({
         el: '#vm',
         data: {
-            name: '',
             email: '',
             password1: '',
-            password2: ''
+            password2: '',
         },
         methods: {
             submit: function (event) {
                 event.preventDefault();
                 var $form = $('#vm');
-                if (! this.name.trim()) {
-                    return $form.showFormError('请输入名字');
-                }
                 if (! validateEmail(this.email.trim().toLowerCase())) {
                     return $form.showFormError('请输入正确的Email地址');
                 }
@@ -36,7 +32,6 @@ $(function () {
                 }
                 var email = this.email.trim().toLowerCase();
                 $form.postJSON('/api/users', {
-                    name: this.name.trim(),
                     email: email,
                     passwd: CryptoJS.SHA1(email + ':' + this.password1).toString()
                 }, function (err, r) {
@@ -60,12 +55,6 @@ $(function () {
         <h1>欢迎注册！</h1>
         <form id="vm" v-on="submit: submit" class="uk-form uk-form-stacked">
             <div class="uk-alert uk-alert-danger uk-hidden"></div>
-            <div class="uk-form-row">
-                <label class="uk-form-label">名字:</label>
-                <div class="uk-form-controls">
-                    <input v-model="name" type="text" maxlength="50" placeholder="名字" class="uk-width-1-1">
-                </div>
-            </div>
             <div class="uk-form-row">
                 <label class="uk-form-label">电子邮件:</label>
                 <div class="uk-form-controls">

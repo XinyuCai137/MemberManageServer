@@ -12,7 +12,9 @@ CREATE TABLE interviewers (
     `name` VARCHAR(10) NOT NULL,
     `sex` VARCHAR(10) NOT NULL,
     `school` VARCHAR(30) NOT NULL,
-    `admin` BOOL NOT NULL,
+    `phone` VARCHAR(20) NOT NULL,
+    `passed` BOOL NOT NULL,
+    `image` VARCHAR(500),
     `created_at` REAL NOT NULL,
     UNIQUE KEY `idx_email` (`email`),
     KEY `idx_created_at` (`created_at`),
@@ -22,13 +24,14 @@ CREATE TABLE interviewers (
 CREATE TABLE interviews (
 	`stu_id` VARCHAR(50) NOT NULL, 
 	`grade_1` INT,
-	`graee_2` INT,
+	`grade_2` INT,
 	`grade_3` INT,
-	`graee_4` INT,
+	`grade_4` INT,
 	`grade_5` INT,
 	`extra` VARCHAR(500),
 	PRIMARY KEY (`stu_id`)
 ) ENGINE=innodb DEFAULT CHARSET=utf8;
+
 CREATE TABLE members (
     `stu_id` VARCHAR(10) NOT NULL,
     `email` VARCHAR(50) NOT NULL,
@@ -36,7 +39,6 @@ CREATE TABLE members (
     `name` VARCHAR(10) NOT NULL,
     `sex` VARCHAR(10) NOT NULL, 
     `school` VARCHAR(30) NOT NULL,
-    `grade` VARCHAR(10) NOT NULL,
     `voice_part` VARCHAR(2) NOT NULL,
     `department` VARCHAR(10) NOT NULL,
     `phone` VARCHAR(20) NOT NULL,
@@ -67,3 +69,21 @@ CREATE TABLE departments (
     PRIMARY KEY (`department`)
 ) ENGINE=innodb DEFAULT CHARSET=utf8;
 
+CREATE TABLE clothes (
+    `cloth_id` VARCHAR(10) NOT NULL,
+    `cloth_sex` VARCHAR(2) NOT NULL,
+    `cloth_size` VARCHAR(5) NOT NULL,
+    `borrowed` BOOL NOT NULL,
+    PRIMARY KEY (`cloth_id`)
+) ENGINE=innodb DEFAULT CHARSET=utf8;
+
+USE chorus;
+CREATE TABLE clothes_use (
+    `stu_id` VARCHAR(10) NOT NULL,
+    `cloth_id` VARCHAR(10) NOT NULL,
+    `borrow_time` REAL NOT NULL,
+    `returen_time` REAL,
+    PRIMARY KEY (`stu_id`, `cloth_id`),
+    FOREIGN KEY (`stu_id`) REFERENCES members(`stu_id`),
+    FOREIGN KEY (`cloth_id`) REFERENCES clothes(`cloth_id`)
+) ENGINE=innodb DEFAULT CHARSET=utf8;

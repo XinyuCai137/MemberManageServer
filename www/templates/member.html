@@ -1,0 +1,135 @@
+{% extends '__base__.html' %}
+
+{% block title %}个人信息{% endblock %}
+
+{% block beforehead %}
+
+<script src="/static/js/vue.js"></script>
+<script src="/static/js/vue-resource.min.js"></script>
+
+{% endblock %}
+
+{% block content %}
+<div  id='app' class="uk-width-2-3">
+        <h1>个人信息</h1>  
+        <table class="uk-table">          
+            <tfoot>
+                {% if __user__.email != user.email  %}
+                <tr>
+                    <td>姓名</td> 
+                    <td>[[ member.name ]]</td>
+                </tr>
+                <tr>
+                    <td>学号</td>                    
+                    <td>[[ member.stu_id ]]</td>
+                </tr>
+                <tr>
+                    <td>性别</td>
+                    <td>[[ member.sex ]]</td>
+                </tr>
+                <tr>
+                    <td>邮箱</td>
+                    <td>[[ member.email ]]</td>
+                </tr>
+                <tr>
+                    <td>手机</td>
+                    <td>[[ member.phone ]]</td>
+                </tr>
+                <tr>
+                    <td>学院</td>
+                    <td>[[ member.school ]]</td>
+                </tr>
+                {% endif %}
+                {% if __user__.email == user.email  %}
+                <tr>
+                    <td>姓名</td> 
+                    <td>[[ member.name ]]</td>
+                    <td><input v-model="member.name" type="text" maxlength="20" placeholder="PB/SA/SC/BA"class="uk-width-1-1"></td>
+                </tr>
+                <tr>
+                    <td>学号</td>                    
+                    <td>[[ member.stu_id ]]</td>
+                    <td><input v-model="member.stu_id" type="text" maxlength="20" placeholder="PB/SA/SC/BA"class="uk-width-1-1"></td>
+                </tr>
+                <tr>
+                    <td>性别</td>
+                    <td>[[ member.sex ]]</td>
+                    <td><input v-model="member.sex" type="text" maxlength="20" placeholder="PB/SA/SC/BA"class="uk-width-1-1"></td>
+                </tr>
+                <tr>
+                    <td>邮箱</td>
+                    <td>[[ member.email ]]</td>
+                    <td><input v-model="member.email" type="text" maxlength="20" placeholder="PB/SA/SC/BA"class="uk-width-1-1"></td>
+                </tr>
+                <tr>
+                    <td>手机</td>
+                    <td>[[ member.phone ]]</td>
+                    <td><input v-model="member.phone" type="text" maxlength="20" placeholder="PB/SA/SC/BA"class="uk-width-1-1"></td>
+                </tr>
+                <tr>
+                    <td>学院</td>
+                    <td>[[ member.school ]]</td>
+                    <td><input v-model="member.school" type="text" maxlength="20" placeholder="PB/SA/SC/BA"class="uk-width-1-1"></td>
+                </tr>
+                {% endif %}
+                {% if __user__.admin %}
+                <tr>
+                    <td>声部</td>
+                    <td>[[ member.voice_part ]]</td>
+                    <td><input v-model="member.voice_part" type="text" maxlength="20" placeholder="PB/SA/SC/BA"class="uk-width-1-1"></td>
+                </tr> 
+                <tr>
+                    <td>部门</td>
+                    <td>[[ member.department ]]</td>
+                    <td><input v-model="member.department" type="text" maxlength="20" placeholder="PB/SA/SC/BA"class="uk-width-1-1"></td>
+                </tr>    
+                {% endif %}
+                {% if __user__.admin == 0 %}
+                <tr>
+                    <td>声部</td>
+                    <td>[[ member.voice_part ]]</td>
+                </tr> 
+                <tr>
+                    <td>部门</td>
+                    <td>[[ member.department ]]</td>
+                </tr>                              
+                {% endif %}
+            </tfoot>
+        </table>
+        <button v-on:click="submit" class="uk-button uk-button-primary">提交</button>
+</div>
+<script>
+
+var app = new Vue({
+    el: '#app',
+    delimiters:['[[', ']]'],
+    data: {
+        member: {},
+    },
+    methods: {
+        submit: function(event){
+            this.$http.post('/user/api/edit_personal', {'member': this.member}).then(
+                function(res){
+                    this.member = res.body;
+                    alert("更新成功！");
+                },
+                function(){
+                    console.log('请求失败处理');
+                }
+            )
+        } 
+
+    },
+    mounted: function () {
+        this.$http.get('/user/api/personal').then(
+            function(res){
+                this.member = res.body;    
+            },
+            function(){
+                console.log('请求失败处理');
+            }
+        );
+    },
+})
+</script>
+{% endblock %}

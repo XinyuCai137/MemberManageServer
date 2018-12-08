@@ -1,0 +1,58 @@
+{% extends '__base__.html' %}
+
+{% block title %}学生合唱团{% endblock %}
+
+{% block beforehead %}
+
+<script>
+</script>
+
+{% endblock %}
+
+{% block content %}
+<div class="uk-width-medium-3-4">
+    <article class="uk-article">
+        <h2>学生合唱团</h2>
+        
+        <p>合唱团的宗旨是弘扬合唱艺术、丰富学生课余生活，提高学生的综合素质与文化修
+            养，增强集体荣誉感，以及通过对外交流弘扬学校的人文精神。</p>
+        
+    </article>
+    <hr class="uk-article-divider">
+</div>
+
+<div class="uk-width-medium-1-4">
+    <div class="uk-panel uk-panel-header">
+        <h3 class="uk-panel-title">了解我们</h3>
+        <ul class="uk-list uk-list-line">
+            <li><i class="uk-icon-link"></i> <a href="#">音乐会</a></li>
+            <li><i class="uk-icon-link"></i> <a href="#">组织架构</a></li>
+            <li><i class="uk-icon-link"></i> <a href="#">合唱交流</a></li>
+            <li><i class="uk-icon-link"></i> <a href="#">比赛</a></li>
+        </ul>
+    </div>
+
+</div>
+{% if __user__ %}
+<div class="uk-width-medium-1-4">
+    <div class="uk-panel uk-panel-header">
+        <h3 class="uk-panel-title">团员系统</h3>
+        <ul class="uk-list uk-list-line">
+            <li><i class="uk-icon-align-justify"></i> <a target="_blank" href="/user/personal">个人信息</a></li>
+            <li><i class="uk-icon-search"></i> <a target="_blank" href="/user/enquiry">信息查询</a></li>
+        </ul>
+    </div>
+</div>
+{% endif %}
+{% if __user__.admin %}
+<div class="uk-width-medium-1-4">
+    <div class="uk-panel uk-panel-header">
+        <h3 class="uk-panel-title">Management</h3>
+        <ul class="uk-list uk-list-line">
+            <li><i class="uk-icon-check"></i> <a target="_blank" href="/manage/interview">面试打分</a></li>
+            <li><i class="uk-icon-chevron-circle-down"></i> <a target="_blank" href="/manage/interview/select">面试审核</a></li>
+        </ul>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,168 @@
+{% extends '__base__.html' %}
+
+{% block title %}信息查询{% endblock %}
+
+{% block beforehead %}
+
+<script src="/static/js/vue.js"></script>
+<script src="/static/js/vue-resource.min.js"></script>
+
+{% endblock %}
+{% block content %}
+<div  id='app' class="uk-width-1-1">
+        <h1>信息查询</h1>
+        <div class="uk-width-1-2">
+
+        <table class="uk-table">
+            <thead>
+                <tr>                
+                    <td>性别</td>
+                    <td>学院</td>
+                    <td>声部</td>
+                    <td>部门</td>
+                </tr>
+            </thead>  
+            <tfoot>
+                <tr>
+                    <td>
+                        <select v-model="option.sex">
+                            <option>all</option>
+                            <option>男</option>
+                            <option>女</option>
+                        </select>
+                    </td> 
+                    <td>
+                        <select v-model="option.school">
+                            <option>all</option>
+                            <option>少年班学院</option>
+                            <option>数学科学学院</option>
+                            <option>物理学院</option>
+                            <option>管理学院</option>
+                            <option>化学与材料科学学院</option>
+                            <option>地球和空间科学学院</option>
+                            <option>人文与社会科学学院</option>
+                            <option>工程科学学院</option>
+                            <option>信息科学技术学院</option>
+                            <option>计算机科学与技术学院</option>
+                            <option>网络空间安全学院</option>
+                            <option>软件学院</option>
+                        </select> 
+                    </td>                    
+                    <td>
+                        <select v-model="option.voice_part">
+                            <option>all</option>
+                            <option>S</option>
+                            <option>A</option>
+                            <option>T</option>
+                            <option>B</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select v-model="option.department">
+                            <option>all</option>
+                            <option>财物部</option>
+                            <option>技术部</option>
+                            <option>媒体部</option>
+                            <option>事务部</option>
+                            <option>外联部</option>
+                            <option>宣传部</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button v-on:click="enquiry" class="uk-button uk-button-primary">查询</button>
+                    </td>
+                </tr>
+            </tfoot>               
+
+        </table>
+        </div>
+        <table class="uk-table">
+            <thead>
+                <tr>
+                    <td>姓名</td> 
+                    <td>学号</td>                    
+                    <td>性别</td>
+                    <td>邮箱</td>
+                    <td>手机</td>
+                    <td>学院</td>
+                    <td>声部</td>
+                    <td>部门</td>
+                    {% if __user__.admin %}
+                    <td>声部</td>   
+                    <td>部门</td>
+                    {% endif %}
+                </tr>
+            </thead>           
+            <tfoot>
+                <tr v-for="member in members">
+                    <td>[[ member.name ]]</td>
+                    <td>[[ member.stu_id ]]</td>
+                    <td>[[ member.sex ]]</td>
+                    <td>[[ member.email ]]</td>
+                    <td>[[ member.phone ]]</td>
+                    <td>[[ member.school ]]</td>
+                    <td>[[ member.voice_part ]]</td>
+                    <td>[[ member.department ]]</td>
+                    {% if __user__.admin %}
+                    <td><input v-model="member.voice_part" type="text" maxlength="20" class="uk-width-1-1"></td>
+                    <td><input v-model="member.department" type="text" maxlength="20" class="uk-width-1-1"></td>
+                    {% endif %}
+                </tr>
+            </tfoot>
+        </table>
+        {% if __user__.admin %}
+        <button v-on:click="submit" class="uk-button uk-button-primary">提交</button>
+        {% endif %}
+</div>
+<script>
+
+var app = new Vue({
+    el: '#app',
+    delimiters:['[[', ']]'],
+    data: {
+        members: [],
+        option: {
+            sex: 'all',
+            school: 'all',
+            voice_part: 'all',
+            department: 'all',
+        },
+
+    },
+    methods: {
+        enquiry: function(event){
+            this.$http.post('/user/api/optional_enquiry', {option: this.option}).then(
+                function(res){
+                    this.members = res.body;
+                },
+                function(){
+                    console.log('请求失败处理');
+                }
+            )
+        },
+        submit: function(event){
+            this.$http.post('/manage/api/members', {'members': this.members}).then(
+                function(res){
+                    this.members = res.body;
+                    alert("更新成功！");
+                },
+                function(){
+                    console.log('请求失败处理');
+                }
+            )
+        } 
+
+    },
+    mounted: function () {
+        this.$http.get('/user/api/enquiry').then(
+            function(res){
+                this.members = res.body;    
+            },
+            function(){
+                console.log('请求失败处理');
+            }
+        );
+    },
+})
+</script>
+{% endblock %}
