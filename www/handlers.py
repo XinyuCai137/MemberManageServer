@@ -201,7 +201,7 @@ def get_interviews():
 def submit_interview_result(*, interviews):
     for interview in interviews:
         interviewer = yield from Interviewers.find(interview['stu_id'])
-        interviewer.passed = True if interview['passed'] == 'true' else False
+        interviewer.passed = True if interview['passed'] == 'true' or interview['passed'] == 1  else False
         yield from interviewer.update()
     interviews_ = yield from Interviews.findAll()
     for interview in interviews_:
