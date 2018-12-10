@@ -13,7 +13,7 @@ configs = {
         'host': 'localhost',
         'port': 3306,
         'user': 'root',
-        'password': 'AUI1997',
+        'password': '******',           #Your mysql password
         'db': 'chorus'
     },
     'session': {

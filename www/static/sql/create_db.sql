@@ -29,6 +29,8 @@ CREATE TABLE interviews (
 	`grade_4` INT,
 	`grade_5` INT,
 	`extra` VARCHAR(500),
+    `created_at` REAL NOT NULL,
+    KEY `idx_created_at` (`created_at`),
 	PRIMARY KEY (`stu_id`)
 ) ENGINE=innodb DEFAULT CHARSET=utf8;
 
@@ -69,21 +71,3 @@ CREATE TABLE departments (
     PRIMARY KEY (`department`)
 ) ENGINE=innodb DEFAULT CHARSET=utf8;
 
-CREATE TABLE clothes (
-    `cloth_id` VARCHAR(10) NOT NULL,
-    `cloth_sex` VARCHAR(2) NOT NULL,
-    `cloth_size` VARCHAR(5) NOT NULL,
-    `borrowed` BOOL NOT NULL,
-    PRIMARY KEY (`cloth_id`)
-) ENGINE=innodb DEFAULT CHARSET=utf8;
-
-USE chorus;
-CREATE TABLE clothes_use (
-    `stu_id` VARCHAR(10) NOT NULL,
-    `cloth_id` VARCHAR(10) NOT NULL,
-    `borrow_time` REAL NOT NULL,
-    `returen_time` REAL,
-    PRIMARY KEY (`stu_id`, `cloth_id`),
-    FOREIGN KEY (`stu_id`) REFERENCES members(`stu_id`),
-    FOREIGN KEY (`cloth_id`) REFERENCES clothes(`cloth_id`)
-) ENGINE=innodb DEFAULT CHARSET=utf8;

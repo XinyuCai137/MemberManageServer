@@ -31,6 +31,7 @@ class Interviews(Model):
     __table__ = 'interviews'
     
     stu_id = StringField(primary_key=True, ddl='varchar(10)')
+    created_at = FloatField(default=time.time)
     grade_1 = IntegerField()
     grade_2 = IntegerField()
     grade_3 = IntegerField()
@@ -74,20 +75,6 @@ class Departments(Model):
     department = StringField(primary_key=True, ddl='varchar(10)')
     dep_lead = StringField(ddl='varchar(10)')
 
-class Clothes(Model):
-    __table__ = 'clothes'
 
-    cloth_id = StringField(primary_key=True, ddl='varchar(10)')
-    cloth_sex = StringField(ddl='varchar(2)')
-    cloth_size = StringField(ddl='varchar(5)')
-    borrowed = BooleanField()
-
-class Clothes_use(Model):
-    __table__ = 'clothes_use'
-
-    stu_id = StringField(ddl='varchar(10)')
-    cloth_id = StringField(primary_key=True, ddl='varchar(10)')
-    borrow_time = FloatField(default=time.time)
-    returen_time = FloatField()
 
 
