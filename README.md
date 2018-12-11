@@ -113,7 +113,7 @@ cond(no)->op
 
 #### E-R图
 
-![E-R](C:\Users\27318\Documents\Vegelofe\USTChorusServer\www\static\sql\E-R.png)
+![E-R](https://github.com/cxyvlf/MemberManageServer/tree/master/www/static/sql/E-R.png)
 
 ### 逻辑结构设计
 
@@ -873,9 +873,9 @@ st->ms->log->auth->res1->call->call1->@->res2->e
 
 ```
 
-![index1](C:\Users\27318\Documents\Vegelofe\USTChorusServer\www\static\img\index1.png)
+![index1](https://github.com/cxyvlf/MemberManageServer/tree/master/www/static/img/index1.png)
 
-![signup](C:\Users\27318\Documents\Vegelofe\USTChorusServer\www\static\img\signup.png)
+![signup](https://github.com/cxyvlf/MemberManageServer/tree/master/www/static/img/signup.png)
 
 
 
@@ -920,7 +920,7 @@ M：Model是用来传给View的，这样View在替换变量的时候，就可以
 {% endif %}
 ```
 
-![index2](C:\Users\27318\Documents\Vegelofe\USTChorusServer\www\static\img\index2.png)
+![index2](https://github.com/cxyvlf/MemberManageServer/tree/master/www/static/img/index2.png)
 
 我的账户是有管理员权限的，所以可以看到面试相关内容，如果如果我执行SQL语句
 
@@ -930,7 +930,7 @@ update chorus.members set admin = 0 where stu_id = 'PB15020603'
 
 刷新一下页面就没有面试相关内容了
 
-![index3](C:\Users\27318\Documents\Vegelofe\USTChorusServer\www\static\img\index3.png)
+![index3](https://github.com/cxyvlf/MemberManageServer/tree/master/www/static/img/index3.png)
 
 在个人信息和信息查询页面也有相应的判定来取分管理员和普通用户的权限
 
@@ -1109,7 +1109,7 @@ def api_signup(*, email, name, stu_id, sex, school, phone):
     return r
 ```
 
-![](C:\Users\27318\Documents\Vegelofe\USTChorusServer\www\static\img\报名面试.png)
+![](https://github.com/cxyvlf/MemberManageServer/tree/master/www/static/img/报名面试.png)
 
 ---
 
@@ -1277,13 +1277,13 @@ def auth_factory(app, handler):
 
 面试评分也为一个表单，和前面类似，不再赘述，可参考`interview.html`和`@get('/manage/interview')`、`@post('/manage/api/interview_grade')`
 
-![](C:\Users\27318\Documents\Vegelofe\USTChorusServer\www\static\img\面试打分.png)
+![](https://github.com/cxyvlf/MemberManageServer/tree/master/www/static/img/面试打分.png)
 
 #### 审核
 
 面试审核与前面不同，实现这个功能需要将所有面试信息显示在网页中
 
-![](C:\Users\27318\Documents\Vegelofe\USTChorusServer\www\static\img\面试审核.png)
+![](https://github.com/cxyvlf/MemberManageServer/tree/master/www/static/img/面试审核.png)
 
 `@get('/manage/interview/select')`用于返回适合页面
 
@@ -1412,7 +1412,7 @@ def submit_interview_result(*, interviews):
 
 通过`jinja2`服务器端渲染实现，参照`{% if __user__.email != user.email  %}`、`{% if __user__.admin %}`处，例如我的账户是有管理员权限的，所以我把我的声部修改为`T`部门修改为`外联部`
 
-![](C:\Users\27318\Documents\Vegelofe\USTChorusServer\www\static\img\个人信息.png)
+![](https://github.com/cxyvlf/MemberManageServer/tree/master/www/static/img/个人信息.png)
 
 ---
 
@@ -1537,19 +1537,19 @@ def optional_enquiry(*, option):
 
 例如，首先为蔡心宇123号添加声部和部门
 
-![](C:\Users\27318\Documents\Vegelofe\USTChorusServer\www\static\img\信息查询1.png)
+![](https://github.com/cxyvlf/MemberManageServer/tree/master/www/static/img/信息查询1.png)
 
 查询性别为`女`的团员
 
-![](C:\Users\27318\Documents\Vegelofe\USTChorusServer\www\static\img\信息查询2.png)
+![](https://github.com/cxyvlf/MemberManageServer/tree/master/www/static/img/信息查询2.png)
 
 查询性别为`男`且声部为`B`的团员
 
-![](C:\Users\27318\Documents\Vegelofe\USTChorusServer\www\static\img\信息查询3.png)
+![](https://github.com/cxyvlf/MemberManageServer/tree/master/www/static/img/信息查询3.png)
 
 查询部门为`宣传部`的团员
 
-![----](C:\Users\27318\Documents\Vegelofe\USTChorusServer\www\static\img\信息查询4.png)
+![----](https://github.com/cxyvlf/MemberManageServer/tree/master/www/static/img/信息查询4.png)
 
 ---
 
